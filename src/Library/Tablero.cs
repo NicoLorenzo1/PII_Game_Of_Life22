@@ -1,29 +1,42 @@
+using System.Text;
 using System;
-using System.IO;
+
 
 namespace PII_Game_Of_Life
 {
+    /// <summary>
+    /// Clase Tablero la cual se encarga de Imprimir el string a partir de la variable "s" la cual se va generando a medida que se recorre el tablero.
+    /// Cumple con el SRP y el Expert ya que su unica razón de cambio es a traves de la impresión del tablero y conoce todo lo necesario para imprimirse.
+    /// </summary>
     public class Tablero
     {
-        static string url = @"../../assets/board.txt";
-        static string content = File.ReadAllText(url);
-        static string[] contentLines = content.Split('\n');
-        public static bool[,] board = new bool[contentLines.Length, contentLines[0].Length];
 
-        private void LeerTablero(bool[,] board)
+        public static void Imprimir(bool[,] tablero)
         {
-            for (int y = 0; y < contentLines.Length; y++)
+            Console.Clear();
+            StringBuilder s = new StringBuilder();
+
+            //Utilizo el alto y ancho del array para que se pueda imprimir un tablero de cualquier dimensión.
+            for (int y = 0; y < tablero.GetLength(1); y++) //height
             {
-                for (int x = 0; x < contentLines[y].Length; x++)
+                for (int x = 0; x < tablero.GetLength(0); x++) //width
                 {
-                    if (contentLines[y][x] == '1')
+                    if (tablero[x, y])
                     {
-                        board[x, y] = true;
+                        s.Append("|X|");
+                    }
+                    else
+                    {
+                        s.Append("___");
                     }
                 }
+                s.Append("\n");
+
             }
+
+            Console.WriteLine(s.ToString());
         }
+
     }
+
 }
-
-

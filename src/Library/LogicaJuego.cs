@@ -2,13 +2,24 @@
 
 namespace PII_Game_Of_Life
 {
+    /// <summary>
+    ///Clase LogicaJuego se encarga de realizar toda la logica del juego.
+    ///Cumple con SRP y Expert debido a que su unica razón de cambio seria en caso de cambiar la logica del mismo y esta es experta en lo que hace ya que conoce toda la información necesaria para realizar su función.
+    /// /// </summary>
     public class LogicaJuego
     {
-        static bool[,] gameBoard = Tablero.board;
-        int boardWidth = gameBoard.GetLength(0);
-        int boardHeight = gameBoard.GetLength(1);
+        static bool[,] gameBoard;
+        int boardWidth;
+        int boardHeight;
 
-        private void Modificador()
+        public LogicaJuego(bool[,] initialGameBoard)
+        {
+            gameBoard = initialGameBoard;
+            boardWidth = gameBoard.GetLength(0);
+            boardHeight = gameBoard.GetLength(1);
+
+        }
+        private void CalcularSiguienteGeneracion()
         {
             bool[,] cloneboard = new bool[boardWidth, boardHeight];
             for (int x = 0; x < boardWidth; x++)
@@ -54,16 +65,12 @@ namespace PII_Game_Of_Life
             }
 
             gameBoard = cloneboard;
-            cloneboard = new bool[boardWidth, boardHeight];
+            //cloneboard = new bool[boardWidth, boardHeight];
         }
-        public static bool[,] GameBoard
+        public bool[,] SiguienteGeneracion()
         {
-            get
-            {
-                return gameBoard;
-            }
+            this.CalcularSiguienteGeneracion();
+            return gameBoard;
         }
-
-
     }
 }
